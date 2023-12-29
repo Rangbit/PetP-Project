@@ -26,6 +26,7 @@ export const light = {
   modalbackground: "#14141499",
   backgroundmain: "#FCEFDA",
   backgrounfix1: "#DAECFC",
+  backgrounfix2: "#ffffff99",
   color: { ...color },
 };
 
@@ -48,6 +49,7 @@ export const dark = {
   modalbackground: "#ffffffa6",
   backgroundmain: "#38393e",
   backgrounfix1: "#766c76",
+  backgrounfix2: "#20212486",
   color: { ...color },
 };
 

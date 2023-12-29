@@ -55,12 +55,11 @@ const GithubBox = styled.a`
 
 const GithubText = styled.div`
     color: white;
-    font-size: 20px;
 `;
 
 const GithubLogo = styled.img`
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
 `;
 
 
@@ -69,7 +68,7 @@ export default function Footer() {
     return (
         <Wrapper>
             <Menu>
-                <GithubBox href="https://github.com/2023-SMHRD-IS-BigData1/News-Summary" target="_blank">
+                <GithubBox href="https://github.com/SeeUSoon93/Project_petpi" target="_blank">
                     <GithubLogo src={Github} />
                     <GithubText>GitHub</GithubText>
                 </GithubBox>

@@ -16,9 +16,10 @@ const ToggleWrapper = styled.button`
   height: 40px;
   border-radius: 50%;
   border: 1px solid;
+  padding: 0 0 3px 1px;
   color: ${({ theme }) => theme.text};
   background: ${({ theme }) => theme.button1};
-  border-color: ${({ theme }) => theme.boardBorder1};
+  border-color: ${({ theme }) => theme.boardBorder2};
   cursor: pointer;
   &:hover {
     color: #ffffff;

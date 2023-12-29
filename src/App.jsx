@@ -85,7 +85,7 @@ const TopButton = styled.a`
   cursor: pointer;
   color: ${({ theme }) => theme.text};
   background: ${({ theme }) => theme.button1};
-    border-color: ${({ theme }) => theme.boardBorder1};
+    border-color: ${({ theme }) => theme.boardBorder2};
   text-decoration: none;
   &:hover {
     color: #ffffff;
