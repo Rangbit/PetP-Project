@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
+import { toast } from 'react-toastify';
 
 import Background from "/image/login-back.jpg"
 import MainLogo from "/image/pet-logo.png"
@@ -12,14 +13,14 @@ const Wrapper = styled.div`
     height: 100vh;
     position: relative;
     background-color: #ffffff;
-      &.active {
+      /* &.active {
     .Login-box {
         visibility: visible;
     }
     .signup-box {
         visibility: hidden;
     }
-  }
+  } */
 `;
 
 const BackgroundImage = styled.img`
@@ -31,9 +32,9 @@ const BackgroundImage = styled.img`
 
 const LoginBox = styled.form`
     width: 400px;
-    height: 500px;
+    height: 600px;
     background: ${({ theme }) => theme.backgrounfix2};
-    margin-top: 200px;
+    margin-top: 150px;
     margin-left: 10%;
     padding: 50px;
     border: 1px solid #99999944;
@@ -44,9 +45,7 @@ const LoginBox = styled.form`
     flex-direction: column;
     position: absolute; 
     gap: 20px;
-    &.signup-box {
-        visibility: hidden;
-}
+    visibility: ${(props) => (props.isActive ? 'visible' : 'hidden')};
 `;
 
 const TitleBox = styled.div`
@@ -117,8 +116,41 @@ const UserInput = styled.input`
   &::placeholder {}
 `;
 
+const CheckBoxWrap = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    gap: 20px;
+`;
+
+const CheckInput = styled.input`
+    width: 20px;
+    height: 20px;
+    /* display:none; */
+`;
+
+const CheckLabel = styled.label`
+    cursor: pointer;
+    &:before {
+        content: "";
+        display: inline-block;
+        width: 17px;
+        height: 17px;
+        border: 2px solid #F47C7C;
+        border-radius: 4px;
+        vertical-align: middle;
+    }
+    &.userRole:checked + label:before {
+        content: '✔';
+        background-color: #F47C7C;
+        border-color: #F47C7C;
+        background-position: 50%;
+    }
+`;
+
 const SubmitButton = styled.input`
-    width: 200px;
+    width: 150px;
     height: 50px;
     border: 2px solid #59B0ED;
     color: #59B0ED;
@@ -158,11 +190,12 @@ const SocialButtonBox = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
+    padding: 20px 0;
 `;
 
 const SocialButton = styled.img`
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 10px;
     padding: 4px;
     display: flex;
@@ -334,7 +367,7 @@ export default function Login() {
         <>
             <Wrapper className={isActive ? 'active' : ''}>
                 <BackgroundImage src={Background} />
-                <LoginBox className="signup-box">
+                <LoginBox isActive={isActive} className="signup-box" onSubmit={handleSignupSubmit}>
                     <Link to="/" style={{ textDecoration: "none" }}>
                         <TitleBox>
                             <TitleLogo src={MainLogo} />
@@ -347,21 +380,31 @@ export default function Login() {
                             </TitleText>
                         </TitleBox>
                     </Link>
-                    {/* <TextBox>
-                        <TextHead>어서오세요!</TextHead>
-
-                        반려인의 걱정을 덜어주는<br />
-                        펫피 입니다.
-                    </TextBox> */}
                     <UserInput type="email" name="userId" placeholder="Email" />
-                    <UserInput type="password" name="userPassword" placeholder="Password" />
+                    <UserInput type="password" name="userPw" placeholder="Password" />
+                    <UserInput type="password" name="userPwCheck" placeholder="Password" />
+                    <UserInput type="text" name="userNick" placeholder="Nickname" />
+                    <CheckBoxWrap>
+                        <CheckInput type="checkbox" name="userRole" id="userRole" 
+                            checked={signupFormData.userRole === '1'}
+                            onChange={(e) => {
+                                // 체크 여부에 따라 1(예) 또는 0(아니오)으로 값을 변경
+                                const value = e.target.checked ? '1' : '0';
+                                setSignupFormData((prevFormData) => ({
+                                    ...prevFormData,
+                                    userRole: value,
+                                }));
+                            }} />
+                        수의사이신가요?
+                        {/* <CheckLabel htmlFor="userRole">수의사이신가요?</CheckLabel> */}
+                    </CheckBoxWrap>
                     <SubmitButton type="submit" value="Login" />
                     <BottomText>
-                    가입한 아이디가 없으신가요? &nbsp;
-                    <LinkBox href="#" onClick={() => toggle()}>회원가입</LinkBox>
+                        가입한 아이디가 있으신가요? &nbsp;
+                        <LinkBox href="#" onClick={() => toggle()}>로그인</LinkBox>
                     </BottomText>
                 </LoginBox>
-                <LoginBox className="Login-box">
+                <LoginBox isActive={!isActive} className="Login-box" onSubmit={handleLoginSubmit}>
                     <Link to="/" style={{ textDecoration: "none" }}>
                         <TitleBox>
                             <TitleLogo src={MainLogo} />
@@ -374,24 +417,18 @@ export default function Login() {
                             </TitleText>
                         </TitleBox>
                     </Link>
-                    {/* <TextBox>
-                        <TextHead>어서오세요!</TextHead>
-
-                        반려인의 걱정을 덜어주는<br />
-                        펫피 입니다.
-                    </TextBox> */}
                     <UserInput type="email" name="userId" placeholder="Email" />
                     <UserInput type="password" name="userPassword" placeholder="Password" />
                     <SubmitButton type="submit" value="Login" />
-                    <BottomText>
-                    가입한 아이디가 없으신가요? &nbsp;
-                    <LinkBox href="#" onClick={() => toggle()}>회원가입</LinkBox>
-                    </BottomText>
                     <SocialButtonBox>
                         <SocialButton className="KakaoButton" src={Kakao} />
                         <SocialButton className="KakaoButton" src={Kakao} />
                         <SocialButton className="KakaoButton" src={Kakao} />
                     </SocialButtonBox>
+                    <BottomText>
+                        가입한 아이디가 없으신가요? &nbsp;
+                        <LinkBox href="#" onClick={() => toggle()}>회원가입</LinkBox>
+                    </BottomText>
                 </LoginBox>
             </Wrapper>
         </>
