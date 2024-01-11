@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 import Header from "../components/header";
 
+import SampleImage from "../assets/sample1.png"
+
 const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
@@ -52,6 +54,13 @@ const SideMenu = styled.div`
   z-index: 2;
 `;
 
+const MenuItemBox = styled.div`
+  position: relative;
+  &.menuBox {
+    padding-top: 200px;
+  }
+`;
+
 const DetailItem = styled.div`
   width: 400px;
   height: 100vh;
@@ -66,8 +75,14 @@ const DetailItem = styled.div`
 `;
 
 const CloseButton = styled.button`
-    width: 60px;
-    height: 23px;
+    width: 40px;
+    height: 40px;
+    outline: none;
+    border: 1px solid #99999944;
+  background: ${({ theme }) => theme.background1};
+  position: absolute;
+  top: 110px;
+  right: -40px;
   cursor: pointer;
 `;
 
@@ -83,8 +98,15 @@ const SideMenuItemBox = styled.div`
   cursor: pointer;
   &.searchInput,
   &.searchKeyword {
+    position: absolute;
     justify-content: center;
     height: 100px;
+  }
+  &.searchInput {
+    top: 0;
+  }
+  &.searchKeyword {
+    top: 100px;
   }
 `;
 
@@ -102,17 +124,27 @@ const ItemHeader = styled.div`
 const ItemHead = styled.div`
     font-size: 18px;
     color: #59B0ED;
+    &.detailHead {
+      color: ${({ theme }) => theme.text};
+    }
 `;
 const ItemSub = styled.div`
     color: #999999;
 `;
 const ItemContent = styled.div``;
 
+const ItemImageBox = styled.div`
+  width: 100px;
+  height: 100px;
+  border: 1px solid #99999944;
+  border-radius: 5px;
+  overflow: hidden;
+`;
+
 const ItemImage = styled.img`
     width: 100px;
     height: 100px;
     border-radius: 5px;
-    background-color: aqua;
 `
 
 const SearchInput = styled.input`
@@ -155,7 +187,7 @@ const KeywordBox = styled.div`
 const KeywordBadge = styled.div`
     height: 28px;
     padding: 10px 20px;
-    border: 1px solid;
+    border: 1px solid #59B0ED;
     border-radius: 18px;
     display: flex;
     justify-content: center;
@@ -163,14 +195,33 @@ const KeywordBadge = styled.div`
     white-space: nowrap;
     color: ${({ theme }) => theme.text};
     background: ${({ theme }) => theme.background1};
-    border-color: ${({ theme }) => theme.boardBorder1};
     cursor: pointer;
     &:hover {
         color: #ffffff;
-        background-color: #f0be4d;
+        background-color: #59B0ED;
         border: 1px solid #99999900;
         transition: 0.5s;
     }
+`;
+
+const DetailImageBox = styled.div`
+  width: 100%;
+  height: 250px;
+overflow: hidden;
+`;
+
+const DetailImage = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
+const DetailTextBox = styled.div`
+  width: 100px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+  gap: 20px;
 `;
 
 export default function Map() {
@@ -196,64 +247,85 @@ export default function Map() {
       <WrapperBox>
         <SideMenubutton menuOpen={menuOpen} onClick={toggleMenu}>⟩</SideMenubutton>
         <SideMenu menuOpen={menuOpen}>
-          <SideMenuItemBox className="searchInput">
-            <SearchInput />
-          </SideMenuItemBox>
-          <SideMenuItemBox className="searchKeyword">
-            <KeywordBox>
-              <KeywordBadge>애견동반 카페</KeywordBadge>
-              <KeywordBadge>반려동물 용품</KeywordBadge>
-              <KeywordBadge>동물병원</KeywordBadge>
-              <KeywordBadge>반려동물 응급실</KeywordBadge>
-            </KeywordBox>
-          </SideMenuItemBox>
-          <SideMenuItemBox onClick={openDetailItem}>
-            <ItemTextBox>
-              <ItemHeader>
-                <ItemHead>고려동물병원</ItemHead>
-                <ItemSub>동물병원</ItemSub>
-              </ItemHeader>
-              <ItemContent>진료중 • 12:30에 휴게시간</ItemContent>
-              <ItemContent>광주 남구 방림2동</ItemContent>
-            </ItemTextBox>
-            <ItemImage />
-          </SideMenuItemBox>
-          <SideMenuItemBox onClick={openDetailItem}>
-            <ItemTextBox>
-              <ItemHeader>
-                <ItemHead>고려동물병원</ItemHead>
-                <ItemSub>동물병원</ItemSub>
-              </ItemHeader>
-              <ItemContent>진료중 • 12:30에 휴게시간</ItemContent>
-              <ItemContent>광주 남구 방림2동</ItemContent>
-            </ItemTextBox>
-            <ItemImage />
-          </SideMenuItemBox>
-          <SideMenuItemBox onClick={openDetailItem}>
-            <ItemTextBox>
-              <ItemHeader>
-                <ItemHead>고려동물병원</ItemHead>
-                <ItemSub>동물병원</ItemSub>
-              </ItemHeader>
-              <ItemContent>진료중 • 12:30에 휴게시간</ItemContent>
-              <ItemContent>광주 남구 방림2동</ItemContent>
-            </ItemTextBox>
-            <ItemImage />
-          </SideMenuItemBox>
-          <SideMenuItemBox onClick={openDetailItem}>
-            <ItemTextBox>
-              <ItemHeader>
-                <ItemHead>고려동물병원</ItemHead>
-                <ItemSub>동물병원</ItemSub>
-              </ItemHeader>
-              <ItemContent>진료중 • 12:30에 휴게시간</ItemContent>
-              <ItemContent>광주 남구 방림2동</ItemContent>
-            </ItemTextBox>
-            <ItemImage />
-          </SideMenuItemBox>
+          <MenuItemBox className="menuBox">
+            <SideMenuItemBox className="searchInput">
+              <SearchInput />
+            </SideMenuItemBox>
+            <SideMenuItemBox className="searchKeyword">
+              <KeywordBox>
+                <KeywordBadge>애견동반 카페</KeywordBadge>
+                <KeywordBadge>동물병원</KeywordBadge>
+                <KeywordBadge>반려동물 용품</KeywordBadge>
+                <KeywordBadge>응급실</KeywordBadge>
+              </KeywordBox>
+            </SideMenuItemBox>
+            <SideMenuItemBox onClick={openDetailItem}>
+              <ItemTextBox>
+                <ItemHeader>
+                  <ItemHead>고려동물병원</ItemHead>
+                  <ItemSub>동물병원</ItemSub>
+                </ItemHeader>
+                <ItemContent>진료중 • 12:30에 휴게시간</ItemContent>
+                <ItemContent>광주 남구 방림2동</ItemContent>
+              </ItemTextBox>
+              <ItemImageBox>
+                <ItemImage src={SampleImage} />
+              </ItemImageBox>
+            </SideMenuItemBox>
+            <SideMenuItemBox onClick={openDetailItem}>
+              <ItemTextBox>
+                <ItemHeader>
+                  <ItemHead>고려동물병원</ItemHead>
+                  <ItemSub>동물병원</ItemSub>
+                </ItemHeader>
+                <ItemContent>진료중 • 12:30에 휴게시간</ItemContent>
+                <ItemContent>광주 남구 방림2동</ItemContent>
+              </ItemTextBox>
+              <ItemImageBox>
+                <ItemImage src={SampleImage} />
+              </ItemImageBox>
+            </SideMenuItemBox>
+            <SideMenuItemBox onClick={openDetailItem}>
+              <ItemTextBox>
+                <ItemHeader>
+                  <ItemHead>고려동물병원</ItemHead>
+                  <ItemSub>동물병원</ItemSub>
+                </ItemHeader>
+                <ItemContent>진료중 • 12:30에 휴게시간</ItemContent>
+                <ItemContent>광주 남구 방림2동</ItemContent>
+              </ItemTextBox>
+              <ItemImageBox>
+                <ItemImage src={SampleImage} />
+              </ItemImageBox>
+            </SideMenuItemBox>
+            <SideMenuItemBox onClick={openDetailItem}>
+              <ItemTextBox>
+                <ItemHeader>
+                  <ItemHead>고려동물병원</ItemHead>
+                  <ItemSub>동물병원</ItemSub>
+                </ItemHeader>
+                <ItemContent>진료중 • 12:30에 휴게시간</ItemContent>
+                <ItemContent>광주 남구 방림2동</ItemContent>
+              </ItemTextBox>
+              <ItemImageBox>
+                <ItemImage src={SampleImage} />
+              </ItemImageBox>
+            </SideMenuItemBox>
+          </MenuItemBox>
         </SideMenu>
         <DetailItem detailOpen={detailOpen}>
-          <CloseButton onClick={closeDetailItem}>닫기</CloseButton>
+          <CloseButton onClick={closeDetailItem}>X</CloseButton>
+          <DetailImageBox>
+            <DetailImage src={SampleImage} />
+          </DetailImageBox>
+          <DetailTextBox>
+                <ItemHeader>
+                  <ItemHead className="detailHead">고려동물병원</ItemHead>
+                  <ItemSub>동물병원</ItemSub>
+                </ItemHeader>
+                <ItemContent>진료중 • 12:30에 휴게시간</ItemContent>
+                <ItemContent>광주 남구 방림2동</ItemContent>
+          </DetailTextBox>
         </DetailItem>
         <Content></Content>
       </WrapperBox>
