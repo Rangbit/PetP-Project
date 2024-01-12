@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Header from "../components/header";
 
 import SampleImage from "../assets/sample1.png"
+import SearchIcon from "/search-logo.svg"
 
 const Wrapper = styled.div`
   width: 100%;
@@ -152,10 +153,9 @@ const SearchInput = styled.input`
   border: 2px solid #D1D1D4;
   color: ${({ theme }) => theme.text};
   background: none;
-  padding: 10px;
-  padding-left: 20px;
+  padding: 10px 50px;
   font-size: 18px;
-  width: 75%;
+  width: 100%;
   transition: .2s;
   &:active,
   &:focus,
@@ -224,6 +224,31 @@ const DetailTextBox = styled.div`
   gap: 20px;
 `;
 
+const SearchForm = styled.form`
+  display: flex;
+    align-items: center;
+`;
+
+const SearchLogo = styled.img`
+  width: 25px;
+  position: absolute;
+  left: 50px;
+`;
+
+const ResetButton = styled.button`
+  width: 25px;
+  height: 25px;
+  font-size: 25px;
+  border: none;
+  background-color: #ffffffff;
+  color: #999999;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 50px;
+  cursor: pointer;
+`;
+
 export default function Map() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [detailOpen, setDetailOpen] = useState(false);
@@ -249,7 +274,11 @@ export default function Map() {
         <SideMenu menuOpen={menuOpen}>
           <MenuItemBox className="menuBox">
             <SideMenuItemBox className="searchInput">
-              <SearchInput />
+              <SearchForm>
+                <SearchLogo src={SearchIcon}/>
+                <SearchInput type="text" />
+                <ResetButton type="reset">✖</ResetButton>
+              </SearchForm>
             </SideMenuItemBox>
             <SideMenuItemBox className="searchKeyword">
               <KeywordBox>
